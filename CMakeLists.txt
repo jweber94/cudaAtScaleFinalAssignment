@@ -1,34 +1,57 @@
-cmake_minimum_required(VERSION 4.0)
-set(CMAKE_CXX_STANDARD 11)
+cmake_minimum_required(VERSION 3.16)
 
+## basic cmake setup
+project(cuda_npp_example LANGUAGES CXX CUDA) # enable cuda libraries is easy since cmake 3.10 - this includes the cuda runtime api but not the additional libraries of cuda https://stackoverflow.com/questions/66327073/how-to-find-and-link-cuda-libraries-using-cmake-3-15-and-later
 
-# cuda setup
-find_package(CUDA REQUIRED)
-if(NOT DEFINED CMAKE_CUDA_STANDARD)
-set(CMAKE_CUDA_STANDARD 11)
-set(CMAKE_CUDA_STANDARD_REQUIRED ON)    
-endif()
-include_directories(${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES}) 
-link_directories(${CMAKE_CUDA_INCLUDE_DIRS})
-
-project(cudaAtScaleFinalAssignment LANGUAGES CUDA CXX)
-
-# define source code
+## create the executable
 set(SRCS
-    main.cpp
+    src/main.cu
 )
+
 set(INCLUDES
-    CLI11.hpp
+    include/CLI11.h
+    include/cudaAtScaleFinalAssignment/ImageTransformation.hpp
 )
 
-# create cmake target
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} ${SRCS})
 
-target_link_libraries(${PROJECT_NAME}
-    ${CUDA_LIBRARIES}
-    nppc
-    nppi
+## Add libraries that are needed to build the project 
+# FreeImage include in order to use the convenience tooling of cuda-samples for image processing
+find_library(FREEIMAGE_LIBRARY
+    NAMES freeimage
+    PATHS /usr/lib/x86_64-linux-gnu/
+    NO_DEFAULT_PATH
+)
+find_path(FREEIMAGE_INCLUDE_DIR
+    NAMES FreeImage.h
+    PATHS /usr/include/
+    NO_DEFAULT_PATH
 )
 
-# Optional: CUDA-Code mit nvcc kompilieren
-set_target_properties(${PROJECT_NAME} PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+# Add cuda NPPI - the third party cuda libs need to be added additionally to cmake 
+find_library(NPPI_LIBRARY
+    NAMES nppisu
+    PATHS /usr/local/cuda-11.3/targets/x86_64-linux/lib/stubs/
+    NO_DEFAULT_PATH
+)
+find_path(NPPI_INCLUDE_DIR
+    NAMES nppi.h
+    PATHS /usr/local/cuda-11.3/targets/x86_64-linux/include/
+    NO_DEFAULT_PATH
+)
+
+
+## building the target with dependencies
+target_include_directories(${PROJECT_NAME} 
+    PUBLIC include/ 
+    PUBLIC include/cudaAtScaleFinalAssignment/
+    PUBLIC ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES}
+    PUBLIC thirdparty/cuda-samples/Common/
+    PUBLIC ${FREEIMAGE_INCLUDE_DIR}
+    PUBLIC ${NPPI_INCLUDE_DIR}
+)
+
+target_link_libraries(${PROJECT_NAME} 
+    PUBLIC ${FREEIMAGE_LIBRARY} 
+    PUBLIC ${NPPI_LIBRARY}
+)
