@@ -10,7 +10,7 @@
 #include "UtilNPP/ImagesNPP.h"
 
 #include "cudaAtScaleFinalAssignment/ImageTransformation.hpp"
-#include "cudaAtScaleFinalAssignment/TiffDataLoader.hpp"
+#include "cudaAtScaleFinalAssignment/PgmDataLoader.hpp"
 
 #include <fstream>
 
@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
     CLI11_PARSE(app, argc, argv);
 
     // data input
-    TiffDataLoader dataLoader(pathToData);
+    PgmDataLoader dataLoader(pathToData);
 
     // prepare GPU
     int deviceCount = 0;

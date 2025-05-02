@@ -4,66 +4,66 @@ import sys
 from PIL import Image
 import numpy as np
 
-def tiff_ordner_zu_pgm(eingabe_ordner):
+def tiff_folder_to_pgm(input_folder):
     """
-    Konvertiert alle TIFF-Dateien in einem Ordner in PGM-Dateien.
+    Converts all TIFF files in a folder to PGM (Portable Graymap) files.
 
     Args:
-        eingabe_ordner (str): Der Pfad zum Eingabe-Ordner mit TIFF-Dateien.
+        input_folder (str): The path to the input folder containing TIFF files.
     """
-    if not os.path.isdir(eingabe_ordner):
-        print(f"Fehler: Der angegebene Pfad '{eingabe_ordner}' ist kein gültiger Ordner.")
+    if not os.path.isdir(input_folder):
+        print(f"Error: The specified path '{input_folder}' is not a valid folder.")
         return
 
-    tiff_dateien = [f for f in os.listdir(eingabe_ordner) if f.lower().endswith(('.tiff', '.tif'))]
+    tiff_files = [f for f in os.listdir(input_folder) if f.lower().endswith(('.tiff', '.tif'))]
 
-    if not tiff_dateien:
-        print(f"Keine TIFF-Dateien im Ordner '{eingabe_ordner}' gefunden.")
+    if not tiff_files:
+        print(f"No TIFF files found in the folder '{input_folder}'.")
         return
 
-    print(f"Starte Konvertierung von {len(tiff_dateien)} TIFF-Dateien im Ordner '{eingabe_ordner}'.")
+    print(f"Starting conversion of {len(tiff_files)} TIFF files in the folder '{input_folder}'.")
 
-    for tiff_datei_name in tiff_dateien:
-        tiff_pfad = os.path.join(eingabe_ordner, tiff_datei_name)
-        basis_name, _ = os.path.splitext(tiff_datei_name)
-        pgm_datei_name = basis_name + ".pgm"
-        pgm_pfad = os.path.join(eingabe_ordner, pgm_datei_name)
+    for tiff_file_name in tiff_files:
+        tiff_path = os.path.join(input_folder, tiff_file_name)
+        base_name, _ = os.path.splitext(tiff_file_name)
+        pgm_file_name = base_name + ".pgm"
+        pgm_path = os.path.join(input_folder, pgm_file_name)
 
         try:
-            # TIFF-Bild öffnen
-            img = Image.open(tiff_pfad)
+            # Open the TIFF image
+            img = Image.open(tiff_path)
 
-            # In Graustufen konvertieren, falls es kein Graustufenbild ist
+            # Convert to grayscale if it's not already grayscale
             if img.mode != 'L':
                 img = img.convert('L')
 
-            # Bilddaten als NumPy-Array erhalten
-            bild_array = np.array(img)
-            hoehe, breite = bild_array.shape
+            # Get image data as a NumPy array
+            image_array = np.array(img)
+            height, width = image_array.shape
 
-            # PGM-Datei im Binärformat schreiben
-            with open(pgm_pfad, 'wb') as pgm_datei:
-                # PGM-Header schreiben
-                pgm_datei.write(b'P5\n')  # Magische Zahl für binäres PGM
-                pgm_datei.write(f'{breite} {hoehe}\n'.encode('ascii'))
-                pgm_datei.write(b'255\n')  # Maximaler Grauwert
+            # Write the PGM file in binary format
+            with open(pgm_path, 'wb') as pgm_file:
+                # Write the PGM header
+                pgm_file.write(b'P5\n')  # Magic number for binary PGM
+                pgm_file.write(f'{width} {height}\n'.encode('ascii'))
+                pgm_file.write(b'255\n')  # Maximum grayscale value
 
-                # Bilddaten schreiben
-                pgm_datei.write(bild_array.tobytes())
+                # Write the image data
+                pgm_file.write(image_array.tobytes())
 
-            print(f"Konvertiert: '{tiff_datei_name}' -> '{pgm_datei_name}'")
+            print(f"Converted: '{tiff_file_name}' -> '{pgm_file_name}'")
 
         except FileNotFoundError:
-            print(f"Fehler: Die Datei '{tiff_pfad}' wurde nicht gefunden (sollte nicht passieren).")
+            print(f"Error: The file '{tiff_path}' was not found (should not happen).")
         except Exception as e:
-            print(f"Fehler bei der Konvertierung von '{tiff_datei_name}': {e}")
+            print(f"Error during conversion of '{tiff_file_name}': {e}")
 
-    print("Konvertierung aller TIFF-Dateien abgeschlossen.")
+    print("Conversion of all TIFF files completed.")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Verwendung: python dein_skriptname.py <pfad_zum_tiff_ordner>")
+        print("Usage: python your_script_name.py <path_to_tiff_folder>")
         sys.exit(1)
 
-    eingabe_ordner_pfad = sys.argv[1]
-    tiff_ordner_zu_pgm(eingabe_ordner_pfad)
+    input_folder_path = sys.argv[1]
+    tiff_folder_to_pgm(input_folder_path)
