@@ -46,9 +46,6 @@ CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 //Value Computed by CMake
 CMAKE_PROJECT_NAME:STATIC=cuda_npp_example
 
-//The directory containing a CMake configuration file for CUDA.
-CUDA_DIR:PATH=CUDA_DIR-NOTFOUND
-
 //Value Computed by CMake
 cuda_npp_example_BINARY_DIR:STATIC=C:/Users/jens1/Desktop/programmierung/gpu_programming/cudaAtScaleFinalAssignment/build
 

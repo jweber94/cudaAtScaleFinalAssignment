@@ -1,3 +1,4 @@
 #!/usr/bin/bash
 
-echo "Downloading data"
+echo "Extracting data"
+tar -xzf ./data/misc.tar.gz -C ./data/

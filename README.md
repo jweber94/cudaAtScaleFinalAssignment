@@ -35,25 +35,25 @@ An optional script used to run your executable code, either with or without comm
 Performance Strategies, Image Processing, NPP Library
 
 ## Supported SM Architectures
-
 [SM 3.5 ](https://developer.nvidia.com/cuda-gpus)  [SM 3.7 ](https://developer.nvidia.com/cuda-gpus)  [SM 5.0 ](https://developer.nvidia.com/cuda-gpus)  [SM 5.2 ](https://developer.nvidia.com/cuda-gpus)  [SM 6.0 ](https://developer.nvidia.com/cuda-gpus)  [SM 6.1 ](https://developer.nvidia.com/cuda-gpus)  [SM 7.0 ](https://developer.nvidia.com/cuda-gpus)  [SM 7.2 ](https://developer.nvidia.com/cuda-gpus)  [SM 7.5 ](https://developer.nvidia.com/cuda-gpus)  [SM 8.0 ](https://developer.nvidia.com/cuda-gpus)  [SM 8.6 ](https://developer.nvidia.com/cuda-gpus)
 
 ## Supported OSes
-
-Linux, Windows
+Linux
 
 ## Supported CPU Architecture
-
-x86_64, ppc64le, armv7l
+x86_64
 
 ## CUDA APIs involved
 
 ## Dependencies needed to build/run
-[FreeImage](../../README.md#freeimage), [NPP](../../README.md#npp)
+* [FreeImage](https://github.com/danoli3/FreeImage) needs to be installed on your linux system in a system wide manner
+* [Libtiff](https://github.com/libsdl-org/libtiff) for reading the images into the RAM needs to be installed on your linux system in a system wide manner
+* [NPP](https://docs.nvidia.com/cuda/npp/) which comes automatically with the cuda toolkit, so if you have the cuda toolkit installed, everything will be fine 
+* [cuda-samples](https://github.com/NVIDIA/cuda-samples) which comes with the submodules of this repository
 
 ## Prerequisites
 
-Download and install the [CUDA Toolkit 11.4](https://developer.nvidia.com/cuda-downloads) for your corresponding platform.
+Download and install the [CUDA Toolkit 12.6](https://developer.nvidia.com/cuda-downloads) for your corresponding platform.
 Make sure the dependencies mentioned in [Dependencies]() section above are installed.
 
 ## Build and Run
