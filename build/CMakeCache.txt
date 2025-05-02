@@ -44,7 +44,16 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=cuda_npp_example
+CMAKE_PROJECT_NAME:STATIC=cudaAtScaleFinalAssignment
+
+//Value Computed by CMake
+cudaAtScaleFinalAssignment_BINARY_DIR:STATIC=C:/Users/jens1/Desktop/programmierung/gpu_programming/cudaAtScaleFinalAssignment/build
+
+//Value Computed by CMake
+cudaAtScaleFinalAssignment_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+cudaAtScaleFinalAssignment_SOURCE_DIR:STATIC=C:/Users/jens1/Desktop/programmierung/gpu_programming/cudaAtScaleFinalAssignment
 
 //Value Computed by CMake
 cuda_npp_example_BINARY_DIR:STATIC=C:/Users/jens1/Desktop/programmierung/gpu_programming/cudaAtScaleFinalAssignment/build

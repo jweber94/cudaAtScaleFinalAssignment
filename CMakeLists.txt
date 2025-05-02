@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
 
 ## basic cmake setup
-project(cuda_npp_example LANGUAGES CXX CUDA) # enable cuda libraries is easy since cmake 3.10 - this includes the cuda runtime api but not the additional libraries of cuda https://stackoverflow.com/questions/66327073/how-to-find-and-link-cuda-libraries-using-cmake-3-15-and-later
+project(cudaAtScaleFinalAssignment LANGUAGES CXX CUDA) # enable cuda libraries is easy since cmake 3.10 - this includes the cuda runtime api but not the additional libraries of cuda https://stackoverflow.com/questions/66327073/how-to-find-and-link-cuda-libraries-using-cmake-3-15-and-later
+
+set(CMAKE_CXX_STANDARD 20)
 
 ## create the executable
 set(SRCS
@@ -11,6 +13,7 @@ set(SRCS
 set(INCLUDES
     include/CLI11.h
     include/cudaAtScaleFinalAssignment/ImageTransformation.hpp
+    include/cudaAtScaleFinalAssignment/TiffDataLoader.hpp
 )
 
 add_executable(${PROJECT_NAME} ${SRCS})
@@ -55,3 +58,5 @@ target_link_libraries(${PROJECT_NAME}
     PUBLIC ${FREEIMAGE_LIBRARY} 
     PUBLIC ${NPPI_LIBRARY}
 )
+
+target_compile_options(${PROJECT_NAME} PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:--std=c++17>) # you can not use the normal CXX standart if you use cuda along with it

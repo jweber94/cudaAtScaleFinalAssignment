@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "CLI11.hpp"
 
 #include <cuda_runtime.h>
@@ -9,10 +10,32 @@
 #include "UtilNPP/ImagesNPP.h"
 
 #include "cudaAtScaleFinalAssignment/ImageTransformation.hpp"
+#include "cudaAtScaleFinalAssignment/TiffDataLoader.hpp"
 
 
 int main(int argc, char** argv) {
-    std::cout << "Hello World" << std::endl;
+    // command line parsing
+    CLI::App app{"App description"};
+    argv = app.ensure_utf8(argv);
+    std::string pathToData = "default";
+    app.add_option("-p,--path", pathToData, "Path to the tiff data. We only want the path. The program will iterate over all *.tiff data within this folder (in a non-recursive manner!).");
+    CLI11_PARSE(app, argc, argv);
+
+    // data input
+    TiffDataLoader dataLoader(pathToData);
+
+    // main loop
+    bool terminate = false;
+    while (!terminate) {
+        auto tmpImg = dataLoader.getNextImage();
+        std::cout << "Image path is: " << tmpImg << std::endl;
+        if ("All Images finished" == tmpImg) {
+            terminate = true;
+        }
+    }
+
+    /// TESTING CODE
+    std::cout << "Starting image processing with the data within " << pathToData << std::endl;
     ImageTransformation imgTrans;
     
     int deviceCount = 0;
