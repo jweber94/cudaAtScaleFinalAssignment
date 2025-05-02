@@ -25,17 +25,18 @@ int main(int argc, char** argv) {
     TiffDataLoader dataLoader(pathToData);
 
     // main loop
+    std::cout << "Processing " << dataLoader.getNumImages() << " images" << std::endl;
     bool terminate = false;
     while (!terminate) {
         auto tmpImg = dataLoader.getNextImage();
-        std::cout << "Image path is: " << tmpImg << std::endl;
         if ("All Images finished" == tmpImg) {
             terminate = true;
+            continue;
         }
+        std::cout << "Processing: " << tmpImg << std::endl;
     }
 
     /// TESTING CODE
-    std::cout << "Starting image processing with the data within " << pathToData << std::endl;
     ImageTransformation imgTrans;
     
     int deviceCount = 0;
