@@ -13,7 +13,7 @@ set(SRCS
 set(INCLUDES
     include/CLI11.h
     include/cudaAtScaleFinalAssignment/ImageTransformation.hpp
-    include/cudaAtScaleFinalAssignment/TiffDataLoader.hpp
+    include/cudaAtScaleFinalAssignment/PgmDataLoader.hpp
 )
 
 add_executable(${PROJECT_NAME} ${SRCS})

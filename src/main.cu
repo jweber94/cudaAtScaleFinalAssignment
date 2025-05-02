@@ -12,6 +12,7 @@
 #include "cudaAtScaleFinalAssignment/ImageTransformation.hpp"
 #include "cudaAtScaleFinalAssignment/TiffDataLoader.hpp"
 
+#include <fstream>
 
 int main(int argc, char** argv) {
     // command line parsing
@@ -24,21 +25,7 @@ int main(int argc, char** argv) {
     // data input
     TiffDataLoader dataLoader(pathToData);
 
-    // main loop
-    std::cout << "Processing " << dataLoader.getNumImages() << " images" << std::endl;
-    bool terminate = false;
-    while (!terminate) {
-        auto tmpImg = dataLoader.getNextImage();
-        if ("All Images finished" == tmpImg) {
-            terminate = true;
-            continue;
-        }
-        std::cout << "Processing: " << tmpImg << std::endl;
-    }
-
-    /// TESTING CODE
-    ImageTransformation imgTrans;
-    
+    // prepare GPU
     int deviceCount = 0;
     cudaGetDeviceCount(&deviceCount);
     if (deviceCount == 0) {
@@ -48,19 +35,23 @@ int main(int argc, char** argv) {
     std::cout << "Device count is: " << deviceCount << std::endl;
     cudaSetDevice(0);
 
-    npp::ImageCPU_8u_C1 oHostSrc;
-    npp::ImageNPP_8u_C1 oDeviceSrc(oHostSrc);
- 
-     // create struct with box-filter mask size
-     NppiSize oMaskSize = {5, 5};
- 
-     NppiSize oSrcSize = {(int)oDeviceSrc.width(), (int)oDeviceSrc.height()};
-     NppiPoint oSrcOffset = {0, 0};
- 
-     // create struct with ROI size
-     NppiSize oSizeROI = {(int)oDeviceSrc.width(), (int)oDeviceSrc.height()};
-     // allocate device image of appropriately reduced size
-     npp::ImageNPP_8u_C1 oDeviceDst(oSizeROI.width, oSizeROI.height);
+    // main loop
+    std::cout << "Processing " << dataLoader.getNumImages() << " images" << std::endl;
+    bool terminate = false;
+    while (!terminate) {
+        auto tmpImg = dataLoader.getNextImage();
+        if ("" == tmpImg || "Error" == tmpImg) {
+            std::cout << "DEBUG Termination" << std::endl;
+            terminate = true;
+            continue;
+        }
+        std::cout << "Processing image size: " << tmpImg << std::endl;
+        npp::ImageCPU_8u_C1 oHostSrc;
+        npp::loadImage(tmpImg, oHostSrc);
+    }
 
+    /// TESTING CODE
+    ImageTransformation imgTrans;
+    
     return EXIT_SUCCESS;
 }
