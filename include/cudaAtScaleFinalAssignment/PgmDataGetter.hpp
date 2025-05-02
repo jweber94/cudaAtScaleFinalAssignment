@@ -9,9 +9,9 @@
 #include "UtilNPP/ImagesCPU.h"
 #include "UtilNPP/ImagesNPP.h"
 
-class PgmDataLoader {
+class PgmDataGetter {
     public:
-        PgmDataLoader(const std::string &pathToFolder) :
+        PgmDataGetter(const std::string &pathToFolder) :
             _pathToData{pathToFolder}
         {
             std::cout << "Scanning for data..." << std::endl;
