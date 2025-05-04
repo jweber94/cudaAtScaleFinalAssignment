@@ -35,5 +35,6 @@ int main(int argc, char** argv) {
             std::cerr << "Could not process image " << tmpImgPath << " properly." << std::endl;
         }
     }
+    std::cout << "All images were processing. Terminating successfully." << std::endl;
     return EXIT_SUCCESS;
 }

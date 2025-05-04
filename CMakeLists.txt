@@ -43,6 +43,18 @@ find_path(NPPI_INCLUDE_DIR
     NO_DEFAULT_PATH
 )
 
+# Add cuda NPPIal (arithmetic and logical operations) as dynamic library since nppiNot_8u_C1R is part of it
+find_library(NPPIAL_LIBRARY
+    NAMES nppial
+    PATHS /usr/local/cuda-11.3/targets/x86_64-linux/lib/stubs/
+    NO_DEFAULT_PATH
+)
+find_path(NPPIAL_INCLUDE_DIR
+    NAMES nppi_arithmetic_and_logical_operations.h
+    PATHS /usr/local/cuda-11.3/targets/x86_64-linux/include/
+    NO_DEFAULT_PATH
+)
+
 
 ## building the target with dependencies
 target_include_directories(${PROJECT_NAME} 
@@ -52,11 +64,13 @@ target_include_directories(${PROJECT_NAME}
     PUBLIC thirdparty/cuda-samples/Common/
     PUBLIC ${FREEIMAGE_INCLUDE_DIR}
     PUBLIC ${NPPI_INCLUDE_DIR}
+    PUBLIC ${NPPIAL_INCLUDE_DIR}
 )
 
 target_link_libraries(${PROJECT_NAME} 
     PUBLIC ${FREEIMAGE_LIBRARY} 
     PUBLIC ${NPPI_LIBRARY}
+    PUBLIC ${NPPIAL_LIBRARY}
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:--std=c++17>) # you can not use the normal CXX standart if you use cuda along with it
