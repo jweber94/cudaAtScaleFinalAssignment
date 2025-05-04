@@ -28,6 +28,19 @@ This folder should hold all example data in any format. If the original data is 
 ```src/```
 Here you can find the source code. `main.cu` is the entrypoint to the C++/Cuda application.
 
+```include/```
+Here are the include files of the project. It is best practice to split between src und include in your repository.
+Be aware that we have a subfolder `include/cudaAtScaleFinalAssignment/` where the project includes are placed, whereas `CLI11.h` (a header based command line parsing library) is directly placed under the include folder.
+
+```thirdparty/```
+This is the folder where third party software (in this case the cuda-samples repository) is placed as git submodules.
+
+```helpers/```
+This is a folder with helper scripts to make the data handling more easy.
+
+```output/```
+This is (by the time you are cloning the repository) an empty folder that is used to save the results of the algorithm.
+
 ```INSTALL.sh```
 ***DO NOT CALL THIS ON YOUR OWN IF YOU DO NOT KNOW WHAT YOU ARE DOING.*** This script sets up the environment such that the upcoming programs and scirpts can run properly. It will be invoked implicitly by the `Makefile`
 
