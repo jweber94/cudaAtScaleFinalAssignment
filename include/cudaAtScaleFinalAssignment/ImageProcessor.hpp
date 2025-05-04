@@ -47,10 +47,8 @@
 
             // copy back from the GPU to CPU and save the result to disk
             oDeviceDst.copyTo(oHostDst.data(), oHostDst.pitch());
-            static std::size_t counter = 0;
-            counter++;
-            std::string tmpName = "FooBar" + std::to_string(counter) + ".pgm";
-            saveImage(m_outputFolder + "/" + tmpName, oHostDst);
+            std::string resultPath = m_outputFolder + "/" + generateNewNameFromPath(pathToPgm);
+            saveImage(resultPath, oHostDst);
 
             // free the memory on GPU since it will not clean up itself by going out of scope
             nppiFree(oDeviceSrc.data());
@@ -61,6 +59,27 @@
         ImageProcessor() = delete;
 
     private:
+        std::string generateNewNameFromPath(const std::string &path)
+        {
+            size_t lastSlash = path.rfind('/');
+            std::string nameWithPath = (lastSlash == std::string::npos) ? path : path.substr(lastSlash + 1);
+            size_t lastDot = nameWithPath.rfind('.');
+            std::string nameWithoutEnding;
+            std::string ending;
+            if (lastDot != std::string::npos)
+            {
+                nameWithoutEnding = nameWithPath.substr(0, lastDot);
+                ending = nameWithPath.substr(lastDot);
+            }
+            else
+            {
+                nameWithoutEnding = nameWithPath;
+            }
+            std::string newName = nameWithoutEnding + "_negative";
+            newName += ending;
+            return newName;
+        }
+
         std::string m_outputFolder;
         int m_deviceCount{0};
 };
