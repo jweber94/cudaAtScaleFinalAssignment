@@ -10,8 +10,8 @@ run:
 	/bin/bash run.sh
 
 clean:
-	rm ./output/*
-	rm -rf build
-	rm -rf ./data/misc
+	-rm -f ./output/*
+	-rm -rf build
+	-rm -rf ./data/misc
 
 all: clean install build run
