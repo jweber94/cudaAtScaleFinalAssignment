@@ -12,7 +12,7 @@ set(SRCS
 
 set(INCLUDES
     include/CLI11.h
-    include/cudaAtScaleFinalAssignment/ImageTransformation.hpp
+    include/cudaAtScaleFinalAssignment/ImageProcessor.hpp
     include/cudaAtScaleFinalAssignment/PgmDataGetter.hpp
 )
 

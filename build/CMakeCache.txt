@@ -55,15 +55,6 @@ cudaAtScaleFinalAssignment_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 cudaAtScaleFinalAssignment_SOURCE_DIR:STATIC=C:/Users/jens1/Desktop/programmierung/gpu_programming/cudaAtScaleFinalAssignment
 
-//Value Computed by CMake
-cuda_npp_example_BINARY_DIR:STATIC=C:/Users/jens1/Desktop/programmierung/gpu_programming/cudaAtScaleFinalAssignment/build
-
-//Value Computed by CMake
-cuda_npp_example_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-cuda_npp_example_SOURCE_DIR:STATIC=C:/Users/jens1/Desktop/programmierung/gpu_programming/cudaAtScaleFinalAssignment
-
 
 ########################
 # INTERNAL cache entries
